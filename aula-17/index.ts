@@ -1,12 +1,12 @@
-let numero = 20; // Inferência de tipo -> atribui um tipo de acordo com o seu valor.
+// let numero = 20; // Inferência de tipo -> atribui um tipo de acordo com o seu valor.
 
-const pi = 3.1415; //o tipo é seu próprio valor, pois não conseguimos alterar um constante. 
+// const pi = 3.1415; //o tipo é seu próprio valor, pois não conseguimos alterar um constante. 
 
-let nome: String = "Gabriel";
+// let nome: String = "Gabriel";
 
-let correta: boolean;
+// let correta: boolean;
 
-let resultado = numero * pi;
+// let resultado = numero * pi;
 
 //Exemplo de tipagem em arrays
 //Podem ser feitos de duas formas: number [] or Array<number> (essa ultima é uma prática mais antiga, priorizar a primeira)
@@ -35,13 +35,27 @@ const pessoaTupla: [string, number] = ["Gabriel", 30];
 //Object Types
 
 //Interface
-//Tipo customizado
-interface Person {
+//Tipo customizado -> Os objetos criados deverão obrigatóriamente seguir o padrão do tipo que criamos, com todos os atributos e valores. 
+// interface Person {
+//     nome: string;
+//     idade: number;
+//     profissao?: string; //Utilizando o ? setamos que o parametro é opcional. 
+//     altura: number;
+// }
+
+// Type
+//Diferença entre interface e type: 
+// interface está muito ligado a objetos, e semanticamente quando vamos tipificar um objeto usamos ele. 
+// type pode ser qualquer coisa, definir um tipo para qlq coisa. 
+
+type Person = {
     nome: string;
     idade: number;
-    profissao: string;
     altura: number;
-}
+    profissao?: string;
+};
+
+type MyString = string;
 
 const pessoa: Person = {
     nome: "João",
@@ -49,6 +63,53 @@ const pessoa: Person = {
     profissao: "Desenvolvedor",
     altura: 1.77
 }
+
+console.log(pessoa.idade);
+console.clear();
+
+//Type aliases//Union Types//Literal Types
+type Criterio = "greater" | "lower";
+
+function chooseNumber(numero1: number, numero2: number, criterio?: Criterio): number {
+    switch (criterio){
+        case "greater": 
+            return numero1 > numero2 ? numero1 : numero2;
+        case "lower":
+            return numero1 < numero2 ? numero1 : numero2;
+        default:
+            const numeroAleatorio = Math.random();
+
+            if (numeroAleatorio >= 0.5) return numero1;
+            return numero2;
+    }
+}
+
+const numeroEscolhido = chooseNumber(10,20,"lower");
+console.log("O numero escolhido é:", numeroEscolhido);
+
+//* Utility Types:  A ideia deles é permitir que você crie novos tipos a partir de tipos já existentes
+// 1. Partial
+
+type PersonalPartial = Partial<Person>;
+
+//2. Required 
+
+type PersonRequired = Required<Person>;
+
+// 3. Pick
+
+type PersonPicked = Pick<Person, "nome" | "profissao">;
+
+// 4. Omit
+type PersonOmit = Omit<Person, "profissao">;
+
+// 5. Exclude
+
+type CriterioExclude = Exclude<Criterio, "greater">;
+
+// 6. Record
+
+
 
 
 
